@@ -7,28 +7,13 @@ import styles from "../styles/Account.module.css";
 
 const initialState = {
   email: "",
+  displayName: "",
   password: "",
 };
 
-function checkErrorType(code) {
-  let message;
-  if (code === "auth/wrong-password") {
-    message = "You have entered an invalid password";
-  } else if (code === "auth/user-not-found") {
-    message = "The email you entered doesn't belong to an account";
-  } else if (code === "auth/too-many-requests") {
-    message =
-      "Access to this account has been temporarily disabled due to many failed login attempts.";
-  }
-
-  return message;
-}
-
-function SignIn() {
-  const { signIn } = useAuth();
-  const { status, data, error, setState } = useAccount({
-    data: initialState,
-  });
+function SignUp() {
+  const { signUp } = useAuth();
+  const { status, data, error, setState } = useAccount();
   const {
     formValues,
     buttonRef,
@@ -36,9 +21,10 @@ function SignIn() {
     visibility,
     changeFormValues,
   } = useForm(initialState);
-  const { email, password } = formValues;
+  const { email, password, displayName } = formValues;
 
-  const validation = email.includes("@") && password.length > 5;
+  const validation =
+    email.includes("@") && password.length > 5 && displayName.length > 5;
 
   useEffect(() => {
     buttonRef.current.disabled = true;
@@ -49,24 +35,31 @@ function SignIn() {
 
   useEffect(() => {
     if (status === "idle") return;
-    async function getSignInData() {
+    async function getSignUpData() {
       if (status === "resolved") {
         buttonRef.current.disabled = true;
         try {
-          await signIn(data);
+          await signUp(data);
           setState({ type: "idle" });
-        } catch (error) {
-          const message = checkErrorType(error.code);
-          setState({ type: "rejected", error: message });
-          buttonRef.current.disabled = false;
+        } catch {
+          setState({
+            type: "rejected",
+            error: "Email is already in use by another account",
+          });
+          changeFormValues({ id: email, value: "" });
         }
       }
     }
-    getSignInData();
+
+    getSignUpData();
   }, [data]);
 
   function handleCheckbox(event) {
     changeVisibility(event.target.checked);
+  }
+
+  function handleChange(event) {
+    changeFormValues(event.target);
   }
 
   function handleSubmit(event) {
@@ -74,30 +67,44 @@ function SignIn() {
     setState({ type: "resolved", data: formValues });
   }
 
-  function handleChange(event) {
-    changeFormValues(event.target);
-  }
-
   return (
+    // thinking of refactoring this to a single component
+    // to reuse it with SignIn?
+    // compound component?
     <div className={styles["form-page"]}>
       <div>
         <h2>Site Logo</h2>
+        <p>Sign up to see posts from other people!</p>
       </div>
       <form onSubmit={handleSubmit}>
-        <input value={email} onChange={handleChange} id="email" type="email" />
+        <input
+          value={email}
+          onChange={handleChange}
+          id="email"
+          type="email"
+          placeholder="Email Address"
+        />
+        <input
+          value={displayName}
+          onChange={handleChange}
+          id="displayName"
+          type="text"
+          placeholder="Display Name"
+        />
         <div className={styles["password-box"]}>
           <input
             value={password}
             onChange={handleChange}
             id="password"
             type={visibility ? "text" : "password"}
+            placeholder="Password"
           />
           <div className={styles.checkbox}>
-            <label htmlFor="sign-in-checkbox">
+            <label htmlFor="sign-up-checkbox">
               {password.length ? (visibility ? "Hide" : "Show") : null}
             </label>
             <input
-              id="sign-in-checkbox"
+              id="sign-up-checkbox"
               className={styles.checkbox}
               type="checkbox"
               onChange={handleCheckbox}
@@ -105,17 +112,19 @@ function SignIn() {
           </div>
         </div>
         <button ref={buttonRef} type="submit">
-          {status === "resolved" ? "Loading..." : "Sign in"}
+          {status === "resolved" ? "Loading..." : "Sign up"}
         </button>
       </form>
-      <div>{error && error}</div>
+      <h2 className={styles.error} role="alert">
+        {error && error}
+      </h2>
       <div>
         <p>
-          Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+          Already have an account? <Link to="/signin">Sign in</Link>
         </p>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default SignUp;
