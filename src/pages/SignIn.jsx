@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
+
+import Container from "../components/Container";
+import FormPage from "../components/FormPage";
+import Form from "../components/Form";
+import InputForm from "../components/InputForm";
+import Label from "../components/Label";
+import Button from "../components/Button";
+import Box from "../components/Box";
 import styles from "../styles/Account.module.css";
 
 const initialState = {
@@ -81,51 +89,52 @@ function SignIn() {
   }
 
   return (
-    <div className={styles["form-page"]}>
-      <div>
-        <h2>Site Logo</h2>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={email}
-          onChange={handleChange}
-          id="email"
-          type="email"
-          placeholder="Email Address"
-        />
-        <div className={styles["password-box"]}>
-          <input
-            value={password}
+    <Container className={styles.container}>
+      <FormPage>
+        <Box>
+          <h2>Site Logo</h2>
+        </Box>
+        <Form onSubmit={handleSubmit}>
+          <InputForm
+            value={email}
             onChange={handleChange}
-            id="password"
-            type={visibility ? "text" : "password"}
-            placeholder="Password"
+            id="email"
+            type="email"
+            placeholder="Email Address"
           />
-          <div className={styles.checkbox}>
-            <label htmlFor="sign-in-checkbox">
-              {password.length ? (visibility ? "Hide" : "Show") : null}
-            </label>
-            <input
-              id="sign-in-checkbox"
-              className={styles.checkbox}
-              type="checkbox"
-              onChange={handleCheckbox}
+          <Box className={styles["password-box"]}>
+            <InputForm
+              value={password}
+              onChange={handleChange}
+              id="password"
+              type={visibility ? "text" : "password"}
+              placeholder="Password"
             />
-          </div>
-        </div>
-        <button ref={buttonRef} type="submit">
-          {status === "resolved" ? "Loading..." : "Sign in"}
-        </button>
-      </form>
-      <div className={styles.error} role="alert">
-        {error && error}
-      </div>
-      <div>
-        <p>
-          Don&apos;t have an account? <Link to="/signup">Sign up</Link>
-        </p>
-      </div>
-    </div>
+            <Box className={styles.checkbox}>
+              <Label htmlFor="sign-up-checkbox">
+                {password.length ? (visibility ? "Hide" : "Show") : null}
+              </Label>
+              <InputForm
+                id="sign-in-checkbox"
+                type="checkbox"
+                onChange={handleCheckbox}
+              />
+            </Box>
+          </Box>
+          <Button ref={buttonRef} type="submit">
+            {status === "resolved" ? "Loading..." : "Sign in"}
+          </Button>
+        </Form>
+        <Box className={styles.error} role="alert">
+          {error && error}
+        </Box>
+        <Box>
+          <p>
+            Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+          </p>
+        </Box>
+      </FormPage>
+    </Container>
   );
 }
 
