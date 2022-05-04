@@ -1,43 +1,26 @@
-import React, { useState, useReducer, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import styles from "../styles/SignUp.module.css";
+import useAccount from "../hooks/useAccount";
+import useForm from "../hooks/useForm";
+import styles from "../styles/Account.module.css";
 
-function stateReducer(state, action) {
-  switch (action.type) {
-    case "idle": {
-      return { status: "idle", data: null, error: null };
-    }
-    case "resolved": {
-      return { status: "resolved", data: action.data, error: null };
-    }
-    case "rejected": {
-      return { status: "rejected", data: null, error: action.error };
-    }
-    default: {
-      throw new Error(`Unexpected action type: ${action.type}`);
-    }
-  }
-}
+const initialState = {
+  email: "",
+  displayName: "",
+  password: "",
+};
 
 function SignUp() {
   const { signUp } = useAuth();
-  const [state, dispatch] = useReducer(stateReducer, {
-    status: "idle",
-    data: {
-      email: null,
-      displayName: null,
-      password: null,
-    },
-    error: null,
-  });
-  const [toggleVisibility, setToggleVisibility] = useState(false);
-  const [formValues, setFormValues] = useState({
-    email: "",
-    displayName: "",
-    password: "",
-  });
-  const buttonRef = useRef();
-  const { status, data, error } = state;
+  const { status, data, error, setState } = useAccount();
+  const {
+    formValues,
+    buttonRef,
+    changeVisibility,
+    visibility,
+    changeFormValues,
+  } = useForm(initialState);
   const { email, password, displayName } = formValues;
 
   const validation =
@@ -57,13 +40,13 @@ function SignUp() {
         buttonRef.current.disabled = true;
         try {
           await signUp(data);
-          dispatch({ type: "idle" });
+          setState({ type: "idle" });
         } catch {
-          dispatch({
+          setState({
             type: "rejected",
-            error: new Error("Email is already in use by another account"),
+            error: "Email is already in use by another account",
           });
-          setFormValues((prevState) => ({ ...prevState, email: "" }));
+          changeFormValues({ id: email, value: "" });
         }
       }
     }
@@ -72,59 +55,55 @@ function SignUp() {
   }, [data]);
 
   function handleCheckbox(event) {
-    setToggleVisibility(event.target.checked);
+    changeVisibility(event.target.checked);
   }
 
   function handleChange(event) {
-    const id = event.target.id;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [id]: event.target.value,
-    }));
+    changeFormValues(event.target);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    dispatch({ type: "resolved", data: formValues });
+    setState({ type: "resolved", data: formValues });
   }
 
   return (
-    <div className={styles["sign-up-page"]}>
+    <div className={styles["form-page"]}>
       <div>
         <h2>Site Logo</h2>
         <p>Sign up to see posts from other people!</p>
       </div>
       <form onSubmit={handleSubmit}>
+        <input value={email} onChange={handleChange} id="email" type="email" />
         <input
-          value={formValues.email}
-          onChange={handleChange}
-          id="email"
-          type="email"
-        />
-        <input
-          value={formValues.displayName}
+          value={displayName}
           onChange={handleChange}
           id="displayName"
           type="text"
         />
-        <div className="password-box">
+        <div className={styles["password-box"]}>
           <input
-            value={formValues.password}
+            value={password}
             onChange={handleChange}
             id="password"
-            type={toggleVisibility ? "text" : "password"}
+            type={visibility ? "text" : "password"}
           />
 
-          <input type="checkbox" onChange={handleCheckbox} />
+          <input
+            className={styles.checkbox}
+            type="checkbox"
+            onChange={handleCheckbox}
+          />
         </div>
         <button ref={buttonRef} type="submit">
           {status === "resolved" ? "Loading..." : "Sign up"}
         </button>
       </form>
-      <div>{error && error.message}</div>
+      <div>{error && error}</div>
       <div>
-        <p>Already have an account? Log im</p>
+        <p>
+          Already have an account? <Link to="/signin">Sign in</Link>
+        </p>
       </div>
     </div>
   );
