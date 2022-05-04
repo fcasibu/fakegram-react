@@ -111,7 +111,7 @@ function SignIn() {
               placeholder="Password"
             />
             <Box className={styles.checkbox}>
-              <Label htmlFor="sign-up-checkbox">
+              <Label htmlFor="sign-in-checkbox">
                 {password.length ? (visibility ? "Hide" : "Show") : null}
               </Label>
               <InputForm
