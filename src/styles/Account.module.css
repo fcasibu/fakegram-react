@@ -1,7 +1,8 @@
-.sign-up-page {
+.form-page {
   display:flex;
   flex-direction:column;
   justify-content:center;
+  align-items:center;
   text-align:center;
   gap:1rem;
   background:#ccc;
@@ -11,24 +12,45 @@
   margin: auto;
 }
 
-.sign-up-page form {
+.form-page form {
   display:flex;
   flex-direction:column;
   gap:1rem;
+  width:90%;
 }
 
-.sign-up-page input {
+.form-page input {
+  display:block;
   background:#eee;
   padding:0.5rem;
   border:0;
   outline:1px solid #ccc;
+  width:100%;
 }
 
-.sign-up-page input:focus {
+.form-page input:focus {
   outline: 0.5px solid #333;
 }
 
-.sign-up-page button {
+.password-box {
+  position:relative;
+  width:100%;
+} 
+
+.checkbox {
+  position:absolute;
+  top:5px;
+  right:10px;
+  cursor:pointer;
+}
+
+.checkbox input {
+  visibility:hidden;
+  opacity:0;
+}
+
+
+.form-page button {
   padding:0.5rem 1rem;
   background: skyblue;
   color:white;
