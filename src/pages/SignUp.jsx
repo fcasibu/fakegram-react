@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
@@ -30,15 +30,13 @@ function SignUp() {
     changeFormValues,
   } = useForm(initialState);
   const { email, password, displayName } = formValues;
+  const navigate = useNavigate();
 
   const validation =
     email.includes("@") && password.length > 5 && displayName.length > 5;
 
   useEffect(() => {
-    buttonRef.current.disabled = true;
-    if (validation) {
-      buttonRef.current.disabled = false;
-    }
+    buttonRef.current.disabled = !validation;
   }, [validation]);
 
   async function getSignUpData() {
@@ -46,7 +44,7 @@ function SignUp() {
       buttonRef.current.disabled = true;
       try {
         await signUp(data);
-        setState({ type: "idle" });
+        navigate("/");
       } catch {
         setState({
           type: "rejected",
