@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
+import { updateProfile } from "firebase/auth";
 
 import Container from "../components/Container";
 import FormPage from "../components/FormPage";
@@ -16,8 +17,11 @@ import styles from "../styles/Account.module.css";
 const initialState = {
   email: "",
   displayName: "",
-  password: "",
+  password: ""
 };
+
+const DEFAULT_AVATAR =
+  "https://firebasestorage.googleapis.com/v0/b/fakegram-react.appspot.com/o/default-avatar.png?alt=media&token=27cac4ea-06dd-48d4-abaa-1b4df4d64c8b";
 
 function SignUp() {
   const { signUp } = useAuth();
@@ -27,7 +31,7 @@ function SignUp() {
     buttonRef,
     changeVisibility,
     visibility,
-    changeFormValues,
+    changeFormValues
   } = useForm(initialState);
   const { email, password, displayName } = formValues;
   const navigate = useNavigate();
@@ -43,12 +47,16 @@ function SignUp() {
     if (status === "resolved") {
       buttonRef.current.disabled = true;
       try {
-        await signUp(data);
+        await signUp(data).then(async ({ user }) => {
+          await updateProfile(user, {
+            photoURL: DEFAULT_AVATAR
+          });
+        });
         navigate("/");
       } catch {
         setState({
           type: "rejected",
-          error: "Email is already in use by another account",
+          error: "Email is already in use by another account"
         });
         changeFormValues({ id: email, value: "" });
       }
