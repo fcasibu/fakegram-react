@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../components/Container";
 import Header from "../components/Header";
 
-function Home() {
+function Profile() {
   return (
     <Container>
       <Header />
@@ -10,4 +10,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Profile;
