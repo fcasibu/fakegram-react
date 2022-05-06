@@ -2,8 +2,7 @@ import React from "react";
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { db, storage } from "../firebase";
-import firebase from "firebase/compat/app";
+import { db, storage, firebase } from "../firebase";
 
 function usersCollection(id) {
   return db.collection("users").doc(id);
