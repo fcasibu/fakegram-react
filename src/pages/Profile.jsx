@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import Header from "../components/Header";
 import ProfileView from "../components/ProfileView";
 import { db } from "../firebase";
 import { updateProfile } from "firebase/auth";
