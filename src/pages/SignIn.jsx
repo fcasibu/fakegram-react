@@ -4,18 +4,11 @@ import useAuth from "../hooks/useAuth";
 import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
 
-import Container from "../components/Container";
-import FormPage from "../components/FormPage";
-import Form from "../components/Form";
-import InputForm from "../components/InputForm";
-import Label from "../components/Label";
-import Button from "../components/Button";
-import Box from "../components/Box";
 import styles from "../styles/Account.module.css";
 
 const initialState = {
   email: "",
-  password: "",
+  password: ""
 };
 
 function checkErrorType(code) {
@@ -35,14 +28,14 @@ function checkErrorType(code) {
 function SignIn() {
   const { signIn } = useAuth();
   const { status, data, error, setState } = useAccount({
-    data: initialState,
+    data: initialState
   });
   const {
     formValues,
     buttonRef,
     changeVisibility,
     visibility,
-    changeFormValues,
+    changeFormValues
   } = useForm(initialState);
   const { email, password } = formValues;
   const navigate = useNavigate();
@@ -87,52 +80,52 @@ function SignIn() {
   }
 
   return (
-    <Container className={styles.container}>
-      <FormPage>
-        <Box>
+    <div className={styles.container}>
+      <div className={styles["form-page"]}>
+        <div>
           <h2>Site Logo</h2>
-        </Box>
-        <Form onSubmit={handleSubmit}>
-          <InputForm
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input
             value={email}
             onChange={handleChange}
             id="email"
             type="email"
             placeholder="Email Address"
           />
-          <Box className={styles["password-box"]}>
-            <InputForm
+          <div className={styles["password-box"]}>
+            <input
               value={password}
               onChange={handleChange}
               id="password"
               type={visibility ? "text" : "password"}
               placeholder="Password"
             />
-            <Box className={styles.checkbox}>
-              <Label htmlFor="sign-in-checkbox">
+            <div className={styles.checkbox}>
+              <label htmlFor="sign-in-checkbox">
                 {password.length ? (visibility ? "Hide" : "Show") : null}
-              </Label>
-              <InputForm
+              </label>
+              <input
                 id="sign-in-checkbox"
                 type="checkbox"
                 onChange={handleCheckbox}
               />
-            </Box>
-          </Box>
-          <Button ref={buttonRef} type="submit">
+            </div>
+          </div>
+          <button ref={buttonRef} type="submit">
             {status === "resolved" ? "Loading..." : "Sign in"}
-          </Button>
-        </Form>
-        <Box className={styles.error} role="alert">
+          </button>
+        </form>
+        <div className={styles.error} role="alert">
           {error && error}
-        </Box>
-        <Box>
+        </div>
+        <div>
           <p>
             Don&apos;t have an account? <Link to="/signup">Sign up</Link>
           </p>
-        </Box>
-      </FormPage>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 

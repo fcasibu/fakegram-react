@@ -4,14 +4,9 @@ import useAuth from "../hooks/useAuth";
 import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
 import { updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
-import Container from "../components/Container";
-import FormPage from "../components/FormPage";
-import Form from "../components/Form";
-import InputForm from "../components/InputForm";
-import Label from "../components/Label";
-import Button from "../components/Button";
-import Box from "../components/Box";
 import styles from "../styles/Account.module.css";
 
 const initialState = {
@@ -41,15 +36,26 @@ function SignUp() {
 
   useEffect(() => {
     buttonRef.current.disabled = !validation;
-  }, [validation]);
+  }, [validation, buttonRef]);
 
   async function getSignUpData() {
     if (status === "resolved") {
       buttonRef.current.disabled = true;
       try {
         await signUp(data).then(async ({ user }) => {
+          console.log(user);
+          await setDoc(doc(db, "users", user.uid), {
+            displayName: data.displayName,
+            email: user.email,
+            photoURL: DEFAULT_AVATAR,
+            uid: user.uid,
+            posts: [],
+            followers: 0,
+            following: 0
+          });
           await updateProfile(user, {
-            photoURL: DEFAULT_AVATAR
+            photoURL: DEFAULT_AVATAR,
+            displayName: data.displayName
           });
         });
         navigate("/");
@@ -66,7 +72,7 @@ function SignUp() {
   useEffect(() => {
     if (status === "idle") return;
     getSignUpData();
-  }, [data]);
+  }, [status, data]);
 
   function handleCheckbox(event) {
     changeVisibility(event.target.checked);
@@ -82,60 +88,60 @@ function SignUp() {
   }
 
   return (
-    <Container className={styles.container}>
-      <FormPage className={styles["form-page"]}>
-        <Box>
+    <div className={styles.container}>
+      <div className={styles["form-page"]}>
+        <div>
           <h2>Site Logo</h2>
           <p>Sign up to see posts from other people!</p>
-        </Box>
-        <Form onSubmit={handleSubmit}>
-          <InputForm
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input
             value={email}
             onChange={handleChange}
             id="email"
             type="email"
             placeholder="Email Address"
           />
-          <InputForm
+          <input
             value={displayName}
             onChange={handleChange}
             id="displayName"
             type="text"
             placeholder="Display Name"
           />
-          <Box className={styles["password-box"]}>
-            <InputForm
+          <div className={styles["password-box"]}>
+            <input
               value={password}
               onChange={handleChange}
               id="password"
               type={visibility ? "text" : "password"}
               placeholder="Password"
             />
-            <Box className={styles.checkbox}>
-              <Label htmlFor="sign-up-checkbox">
+            <div className={styles.checkbox}>
+              <label htmlFor="sign-up-checkbox">
                 {password.length ? (visibility ? "Hide" : "Show") : null}
-              </Label>
-              <InputForm
+              </label>
+              <input
                 id="sign-up-checkbox"
                 type="checkbox"
                 onChange={handleCheckbox}
               />
-            </Box>
-          </Box>
-          <Button ref={buttonRef} type="submit">
+            </div>
+          </div>
+          <button ref={buttonRef} type="submit">
             {status === "resolved" ? "Loading..." : "Sign up"}
-          </Button>
-        </Form>
-        <Box className={styles.error} role="alert">
+          </button>
+        </form>
+        <div className={styles.error} role="alert">
           {error && error}
-        </Box>
-        <Box>
+        </div>
+        <div>
           <p>
             Already have an account? <Link to="/signin">Sign in</Link>
           </p>
-        </Box>
-      </FormPage>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 
