@@ -1,0 +1,49 @@
+.profile-view {
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+}
+
+.profile-view img {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+}
+
+.profile-info,
+.profile-count,
+.profile-info-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-count {
+  flex-direction: row;
+}
+
+.profile-count h2 {
+  font-size: 1.1rem;
+}
+
+.profile-count li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.profile-info-top {
+  flex-direction: row;
+}
+
+.profile-info-top h2 {
+  font-weight: 500;
+}
+
+.profile-info-top button {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
