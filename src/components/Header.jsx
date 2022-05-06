@@ -2,20 +2,18 @@ import React from "react";
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Box from "./Box";
-import InputForm from "./InputForm";
 
-function Header() {
+const Header = React.memo(function Header() {
   const { currentUser } = useAuth();
 
   return (
     <header className="header">
-      <Box>
+      <div>
         <h2>Site Logo</h2>
-      </Box>
-      <Box>
-        <InputForm />
-      </Box>
+      </div>
+      <div>
+        <input />
+      </div>
       <nav>
         <ul>
           <li>
@@ -35,6 +33,6 @@ function Header() {
       </nav>
     </header>
   );
-}
+});
 
 export default Header;
