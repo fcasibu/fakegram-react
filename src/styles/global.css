@@ -4,6 +4,8 @@
   --background-color: #fafafa;
   --foreground-color: #fff;
   --primary-color: #0095f6;
+  --text-light: #fff;
+  --text-dark: #333;
   --danger: #f44336;
   --warning: #ec7f11;
   --success: #6f9049;
@@ -53,9 +55,10 @@ body {
   display: flex;
   justify-content: space-between;
   background: var(--foreground-color);
-  padding: 0.5rem;
-  max-width: 825px;
+  padding: 0.5rem 5rem;
+  max-width: 100%;
   width: 100%;
+  z-index: 10000;
 }
 
 .header ul {
@@ -79,18 +82,16 @@ body {
   border-radius: 100%;
 }
 
-.header li label {
+.header li button {
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
   background: none;
   border: 2px solid black;
   border-radius: 0.3rem;
   cursor: pointer;
 }
 
-.header li label p {
+.header li button p {
   pointer-events: none;
 }
 

@@ -1,3 +1,9 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .profile-view {
   display: flex;
   gap: 6rem;
@@ -46,4 +52,32 @@
   border-radius: 0.2rem;
   padding: 0.3rem 0.8rem;
   cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-top: 1px solid #ccc;
+}
+
+.tabs h3 {
+  font-size: 0.8rem;
+  border-top: 2px solid black;
+  padding-top: 0.8rem;
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.posts img {
+  max-width: 280px;
+  height: 250px;
+}
+
+.posts img:hover {
+  opacity: 0.8;
 }
