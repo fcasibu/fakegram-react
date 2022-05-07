@@ -1,36 +1,44 @@
 import React from "react";
-import { FaHome } from "react-icons/fa";
+import { FiHome, FiSearch, FiHeart, FiMessageCircle } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Modal from "./Modal";
 import useModal from "../hooks/useModal";
 import UploadModal from "./UploadModal";
 
-const Header = React.memo(function Header() {
+function Header() {
   const { currentUser } = useAuth();
   const { uid, photoURL, displayName } = currentUser;
   const { isModalOpen, openModal } = useModal();
-
   return (
     <header className="header">
       {isModalOpen && <Modal component={UploadModal} />}
       <div>
-        <h2>Site Logo</h2>
+        <h2>Fakegram</h2>
       </div>
-      <div>
+      <div className="search-bar">
+        <div className="search-icon">
+          <FiSearch />
+        </div>
         <input />
       </div>
       <nav>
         <ul>
           <li>
             <Link to="/">
-              <FaHome />
+              <FiHome />
             </Link>
+          </li>
+          <li>
+            <FiMessageCircle />
           </li>
           <li>
             <button onClick={() => openModal()}>
               <p>+</p>
             </button>
+          </li>
+          <li>
+            <FiHeart />
           </li>
           <li>
             <Link to={`/${uid}`}>
@@ -41,7 +49,7 @@ const Header = React.memo(function Header() {
       </nav>
     </header>
   );
-});
+}
 
 export default Header;
 /*  <label htmlFor="upload-file">
