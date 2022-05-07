@@ -50,6 +50,7 @@ function SignUp() {
             photoURL: DEFAULT_AVATAR,
             uid: user.uid,
             posts: [],
+            saved: [],
             followers: 0,
             following: 0
           });
