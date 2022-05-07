@@ -15,7 +15,6 @@ async function getData(userID) {
 
 function Profile() {
   const { userID } = useParams();
-  const { currentUser } = useAuth();
   const { status, error, data, runAsync } = useAsync();
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function Profile() {
   if (status === "pending") return <FallbackLoading />;
 
   if (status === "resolved") {
-    return <ProfileView currentUser={currentUser} user={data} />;
+    return <ProfileView user={data} />;
   }
 }
 
