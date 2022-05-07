@@ -5,9 +5,9 @@ import { db } from "../firebase";
 import { updateProfile } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import useAsync from "../hooks/useAsync";
+import { doc, onSnapshot } from "firebase/firestore";
 
 async function getData(userID) {
-  console.log("hello");
   const data = await db.collection("users").get();
   return data.docs.filter(doc => doc.data().uid === userID)[0].data();
 }
@@ -18,8 +18,12 @@ function Profile() {
   const { status, error, data, runAsync } = useAsync();
 
   useEffect(() => {
-    runAsync(getData(userID));
-  }, [runAsync, userID]);
+    const unsub = onSnapshot(doc(db, "users", userID), doc => {
+      runAsync(getData(doc.data().uid));
+    });
+
+    return unsub;
+  }, []);
 
   // Create a new component instead
   if (status === "pending") return <div>Loading...</div>;
