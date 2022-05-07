@@ -6,6 +6,7 @@ import { updateProfile } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import useAsync from "../hooks/useAsync";
 import { doc, onSnapshot } from "firebase/firestore";
+import FallbackLoading from "../components/FallbackLoading";
 
 async function getData(userID) {
   const data = await db.collection("users").get();
@@ -23,10 +24,9 @@ function Profile() {
     });
 
     return unsub;
-  }, []);
+  }, [userID]);
 
-  // Create a new component instead
-  if (status === "pending") return <div>Loading...</div>;
+  if (status === "pending") return <FallbackLoading />;
 
   if (status === "resolved") {
     return <ProfileView currentUser={currentUser} user={data} />;
