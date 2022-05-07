@@ -1,21 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Followings from "./Followings";
+import styles from "../styles/MainView.module.css";
+import Suggestions from "./Suggestions";
 
 function MainView({ users }) {
   return (
-    <>
-      <div>
-        {users &&
-          users.map(el => {
-            return (
-              <div key={el.uid}>
-                <Link to={el.uid}>{el.uid}</Link>
-              </div>
-            );
-          })}
+    <main className={styles.main}>
+      <div className={styles["left-section"]}>
+        <Followings users={users} />
       </div>
-    </>
+      <div className={styles["right-section"]}>
+        <Suggestions users={users} />
+      </div>
+    </main>
   );
 }
 
