@@ -83,7 +83,7 @@ function SignIn() {
     <div className={styles.container}>
       <div className={styles["form-page"]}>
         <div>
-          <h2>Site Logo</h2>
+          <h2>Fakegram</h2>
         </div>
         <form onSubmit={handleSubmit}>
           <input
