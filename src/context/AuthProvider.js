@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import AuthContext from "./AuthContext";
 import { auth, db, storage, firebase } from "../firebase";
@@ -41,7 +40,6 @@ function postImage(uid, img, caption) {
 function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [isModalOpen, setIsModalOpen] = useState();
-  const navigate = useNavigate();
 
   function signUp({ email, password }) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -63,7 +61,6 @@ function AuthProvider({ children }) {
 
   function closeModal() {
     setIsModalOpen(false);
-    navigate(`/${currentUser.uid}`);
   }
 
   useEffect(() => {
