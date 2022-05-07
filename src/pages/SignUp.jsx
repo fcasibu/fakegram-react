@@ -43,7 +43,6 @@ function SignUp() {
       buttonRef.current.disabled = true;
       try {
         await signUp(data).then(async ({ user }) => {
-          console.log(user);
           await setDoc(doc(db, "users", user.uid), {
             displayName: data.displayName,
             email: user.email,
@@ -51,8 +50,8 @@ function SignUp() {
             uid: user.uid,
             posts: [],
             saved: [],
-            followers: 0,
-            following: 0
+            followers: [],
+            following: []
           });
           await updateProfile(user, {
             photoURL: DEFAULT_AVATAR,
