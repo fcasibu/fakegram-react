@@ -4,24 +4,33 @@ import useAuth from "../hooks/useAuth";
 import styles from "../styles/MainView.module.css";
 import { Link } from "react-router-dom";
 
-function Suggestions({ users }) {
+function Suggestions({ users, followUser }) {
   const { currentUser } = useAuth();
 
   function filterUsers() {
     return users.filter(
       user =>
-        !user.following.includes(currentUser.uid) &&
+        !user.followers.includes(currentUser.uid) &&
         user.uid !== currentUser.uid
     );
+  }
+
+  function followHandler({ target: { id } }) {
+    followUser(id, currentUser.uid);
   }
 
   function renderUsers() {
     return filterUsers().map(user => {
       return (
-        <Link to={`/${user.uid}`} className={styles.user} key={user.uid}>
-          <img src={user.photoURL} />
-          <h3>{user.displayName}</h3>
-        </Link>
+        <div key={user.uid} className={styles.user}>
+          <Link to={`/${user.uid}`} className={styles.user}>
+            <img src={user.photoURL} />
+            <h3>{user.displayName}</h3>
+          </Link>
+          <button id={user.uid} onClick={followHandler}>
+            Follow
+          </button>
+        </div>
       );
     });
   }
@@ -32,7 +41,10 @@ function Suggestions({ users }) {
         <img src={currentUser.photoURL} />
         <h3>{currentUser.displayName}</h3>
       </Link>
-      <h3>Suggestions for you</h3>
+      <div className={styles["all-users"]}>
+        <h3>Suggestions for you</h3>
+        <button>See All</button>
+      </div>
       <div className={styles.users}>{renderUsers()}</div>
     </>
   );
@@ -41,5 +53,6 @@ function Suggestions({ users }) {
 export default Suggestions;
 
 Suggestions.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.object)
+  users: PropTypes.arrayOf(PropTypes.object),
+  followUser: PropTypes.func
 };
