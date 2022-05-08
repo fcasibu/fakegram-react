@@ -4,6 +4,19 @@ import AuthContext from "./AuthContext";
 import { auth, db, storage, firebase } from "../firebase";
 import ModalContext from "./ModalContext";
 
+function getUserFromDB(id) {
+  return db.collection("users").doc(id);
+}
+
+function setFollowState(getID, setID, field, state = "arrayUnion") {
+  getUserFromDB(getID).update(
+    {
+      [field]: firebase.firestore.FieldValue[state](setID)
+    },
+    { merge: true }
+  );
+}
+
 function usersCollection(id) {
   return db.collection("users").doc(id);
 }
@@ -17,7 +30,7 @@ async function isImagePosted(uid, img) {
   return getData.data().posts.some(post => post.id === img.name);
 }
 
-function postImage(uid, img, caption) {
+function postImage(uid, img, caption = "") {
   imageRef(uid, img)
     .getDownloadURL()
     .then(url => {
@@ -27,7 +40,7 @@ function postImage(uid, img, caption) {
             caption,
             image: url,
             comments: [],
-            likes: 0,
+            likes: [],
             id: img.name,
             createdAt: firebase.firestore.Timestamp.now()
           })
@@ -63,11 +76,20 @@ function AuthProvider({ children }) {
     setIsModalOpen(false);
   }
 
+  function followUser(user, currentUser) {
+    setFollowState(user, currentUser, "followers");
+    setFollowState(currentUser, user, "following");
+  }
+
+  function unfollowUser(user, currentUser) {
+    setFollowState(user, currentUser, "followers", "arrayRemove");
+    setFollowState(currentUser, user, "following", "arrayRemove");
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
     });
-
     return unsubscribe;
   }, []);
 
@@ -75,7 +97,9 @@ function AuthProvider({ children }) {
     currentUser,
     signUp,
     signIn,
-    addPost
+    addPost,
+    followUser,
+    unfollowUser
   };
 
   const modalValue = {
