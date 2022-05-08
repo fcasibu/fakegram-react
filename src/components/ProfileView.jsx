@@ -1,30 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { db, firebase } from "../firebase";
 import { updateProfile } from "firebase/auth";
 import styles from "../styles/ProfileView.module.css";
 import Header from "./Header";
 import useAuth from "../hooks/useAuth";
 
-function getUserFromDB(id) {
-  return db.collection("users").doc(id);
-}
-
-function setFollowState(getID, setID, field, state = "arrayUnion") {
-  getUserFromDB(getID).set(
-    {
-      [field]: firebase.firestore.FieldValue[state](setID)
-    },
-    { merge: true }
-  );
-}
-
 const ProfileView = React.memo(function ProfileView({ user }) {
-  const { currentUser } = useAuth();
+  const { currentUser, followUser, unfollowUser } = useAuth();
 
   const isCurrentUser = user.uid === currentUser.uid;
   const isFollowing = user.followers.includes(currentUser.uid);
-  console.log(currentUser.uid);
+
   function renderPosts() {
     return user.posts.map(post => {
       return (
@@ -35,14 +21,12 @@ const ProfileView = React.memo(function ProfileView({ user }) {
     });
   }
 
-  function followUser() {
-    setFollowState(user.uid, currentUser.uid, "followers");
-    setFollowState(currentUser.uid, user.uid, "following");
+  function followHandler() {
+    followUser(user.uid, currentUser.uid);
   }
 
-  function unfollowUser() {
-    setFollowState(user.uid, currentUser.uid, "followers", "arrayRemove");
-    setFollowState(currentUser.uid, user.uid, "following", "arrayRemove");
+  function unfollowHandler() {
+    unfollowUser(user.uid, currentUser.uid);
   }
 
   return (
@@ -56,9 +40,9 @@ const ProfileView = React.memo(function ProfileView({ user }) {
               <h2>{user.displayName}</h2>
               <button>Edit Profile</button>
               {isCurrentUser ? null : !isFollowing ? (
-                <button onClick={followUser}>Follow</button>
+                <button onClick={followHandler}>Follow</button>
               ) : (
-                <button onClick={unfollowUser}>Unfollow</button>
+                <button onClick={unfollowHandler}>Unfollow</button>
               )}
             </div>
             <div>
