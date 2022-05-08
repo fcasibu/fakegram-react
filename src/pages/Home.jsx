@@ -4,21 +4,35 @@ import Header from "../components/Header";
 import MainView from "../components/MainView";
 import { db } from "../firebase";
 import useAsync from "../hooks/useAsync";
+import {
+  onSnapshot,
+  query,
+  collection,
+  limitToLast,
+  orderBy
+} from "firebase/firestore";
 
-async function getData() {
-  const data = [];
-  const snapshot = await db.collection("users").get();
-  snapshot.docs.forEach(doc => {
-    data.push(doc.data());
+function queryData() {
+  return query(collection(db, "users"), orderBy("createdAt"), limitToLast(7));
+}
+
+function getSnapshot(setData) {
+  return onSnapshot(queryData(), querySnapshot => {
+    const data = [];
+    querySnapshot.forEach(doc => {
+      data.push(doc.data());
+    });
+    setData(data);
   });
-  return data;
 }
 
 function Home() {
-  const { status, data, error, runAsync } = useAsync();
+  const { status, data, followUser, setData } = useAsync();
 
   useEffect(() => {
-    runAsync(getData());
+    const unsub = getSnapshot(setData);
+    console.log(data, "hello");
+    return unsub;
   }, []);
 
   if (status === "pending") return <FallbackLoading />;
@@ -26,7 +40,7 @@ function Home() {
   return (
     <div className="container">
       <Header />
-      <MainView users={data} />
+      <MainView users={data} followUser={followUser} />
     </div>
   );
 }
