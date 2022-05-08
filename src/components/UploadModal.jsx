@@ -6,7 +6,7 @@ import styles from "../styles/Modal.module.css";
 function UploadModal() {
   const { addPost } = useAuth();
   const { closeModal } = useModal();
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState();
 
