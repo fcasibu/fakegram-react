@@ -5,7 +5,7 @@ import useAccount from "../hooks/useAccount";
 import useForm from "../hooks/useForm";
 import { updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, firebase } from "../firebase";
 
 import styles from "../styles/Account.module.css";
 
@@ -48,6 +48,7 @@ function SignUp() {
             email: user.email,
             photoURL: DEFAULT_AVATAR,
             uid: user.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             posts: [],
             saved: [],
             followers: [],
@@ -105,6 +106,8 @@ function SignUp() {
           <input
             value={displayName}
             onChange={handleChange}
+            maxLength="12"
+            pattern="[a-zA-Z0-9]+"
             id="displayName"
             type="text"
             placeholder="Display Name"
