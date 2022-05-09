@@ -116,6 +116,7 @@
 .post-top {
   display: flex;
   align-items: center;
+  color: var(--text-dark);
   padding: 0.5rem;
 }
 
@@ -141,8 +142,17 @@
   cursor: pointer;
 }
 
+.post-icons > div {
+  display: flex;
+}
+
 .post-icons > div * + * {
   margin-left: 0.5rem;
+}
+
+.liked > * {
+  fill: red;
+  stroke: red;
 }
 
 .likes {
