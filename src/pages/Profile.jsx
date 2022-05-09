@@ -15,7 +15,7 @@ async function getData(userID) {
 
 function Profile() {
   const { userID } = useParams();
-  const { status, error, data, runAsync } = useAsync();
+  const { status, data, runAsync } = useAsync();
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", userID), doc => {
