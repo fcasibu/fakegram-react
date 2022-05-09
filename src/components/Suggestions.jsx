@@ -4,8 +4,8 @@ import useAuth from "../hooks/useAuth";
 import styles from "../styles/MainView.module.css";
 import { Link } from "react-router-dom";
 
-function Suggestions({ users, followUser }) {
-  const { currentUser } = useAuth();
+function Suggestions({ users }) {
+  const { currentUser, followUser } = useAuth();
 
   function filterUsers() {
     return users.filter(
@@ -53,6 +53,5 @@ function Suggestions({ users, followUser }) {
 export default Suggestions;
 
 Suggestions.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.object),
-  followUser: PropTypes.func
+  users: PropTypes.arrayOf(PropTypes.object)
 };
