@@ -13,7 +13,11 @@ import {
 } from "firebase/firestore";
 
 function queryData() {
-  return query(collection(db, "users"), orderBy("createdAt"), limitToLast(7));
+  return query(
+    collection(db, "users"),
+    orderBy("createdAt", "desc"),
+    limitToLast(30)
+  );
 }
 
 function getSnapshot(setData) {
@@ -27,11 +31,10 @@ function getSnapshot(setData) {
 }
 
 function Home() {
-  const { status, data, followUser, setData } = useAsync();
+  const { status, data, setData } = useAsync();
 
   useEffect(() => {
     const unsub = getSnapshot(setData);
-    console.log(data, "hello");
     return unsub;
   }, []);
 
@@ -40,7 +43,7 @@ function Home() {
   return (
     <div className="container">
       <Header />
-      <MainView users={data} followUser={followUser} />
+      <MainView users={data} />
     </div>
   );
 }
