@@ -14,7 +14,9 @@ function Header() {
     <header className="header">
       {isModalOpen && <Modal component={UploadModal} />}
       <div>
-        <h2>Fakegram</h2>
+        <Link to="/" style={{ color: "var(--text-dark)" }}>
+          <h2>Fakegram</h2>
+        </Link>
       </div>
       <div className="search-bar">
         <div className="search-icon">
