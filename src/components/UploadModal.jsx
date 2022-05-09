@@ -9,14 +9,16 @@ function UploadModal() {
   const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState();
+  const [disable, setDisable] = useState(true);
 
   function changeHandler(event) {
     setFile(event.target.files[0]);
+    setDisable(false);
   }
   async function sharePost() {
     setLoading(true);
+    setDisable(true);
     await addPost(file, caption);
-    setLoading(true);
     closeModal();
   }
 
@@ -36,7 +38,7 @@ function UploadModal() {
         ></textarea>
       </div>
       <div className={styles.share}>
-        <button disabled={file === ""} onClick={sharePost}>
+        <button disabled={disable} onClick={sharePost}>
           {loading ? "Loading..." : "Share"}
         </button>
       </div>
