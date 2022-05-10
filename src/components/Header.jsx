@@ -9,10 +9,15 @@ import UploadModal from "./UploadModal";
 function Header() {
   const { currentUser } = useAuth();
   const { uid, photoURL, displayName } = currentUser;
-  const { isModalOpen, openModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   return (
     <header className="header">
-      {isModalOpen && <Modal component={UploadModal} />}
+      {isModalOpen && (
+        <Modal
+          component={<UploadModal closeModal={closeModal} />}
+          closeModal={closeModal}
+        />
+      )}
       <div>
         <Link to="/" style={{ color: "var(--text-dark)" }}>
           <h2>Fakegram</h2>
@@ -54,7 +59,3 @@ function Header() {
 }
 
 export default Header;
-/*  <label htmlFor="upload-file">
-              <p>+</p>
-              <input id="upload-file" type="file" onChange={changeHandler} />
-            </label>*/
