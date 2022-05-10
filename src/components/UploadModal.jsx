@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import useAuth from "../hooks/useAuth";
-import useModal from "../hooks/useModal";
 import styles from "../styles/Modal.module.css";
 
-function UploadModal() {
+function UploadModal({ closeModal }) {
   const { addPost } = useAuth();
-  const { closeModal } = useModal();
   const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState();
@@ -34,6 +33,7 @@ function UploadModal() {
         <textarea
           placeholder="Your caption"
           value={caption}
+          maxLength="60"
           onChange={e => setCaption(e.target.value)}
         ></textarea>
       </div>
@@ -47,3 +47,7 @@ function UploadModal() {
 }
 
 export default UploadModal;
+
+UploadModal.propTypes = {
+  closeModal: PropTypes.func
+};
