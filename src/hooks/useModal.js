@@ -1,8 +1,17 @@
-import { useContext } from "react";
-import ModalContext from "../context/ModalContext";
+import { useState } from "react";
 
 function useModal() {
-  return useContext(ModalContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function openModal() {
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
+
+  return { isModalOpen, openModal, closeModal };
 }
 
 export default useModal;
