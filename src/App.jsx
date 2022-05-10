@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import EditProfile from "./pages/EditProfile";
 
 function PrivateRoute() {
   const { currentUser } = useAuth();
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<PrivateRoute />}>
             <Route index element={<Home />} />
             <Route path=":userID" element={<Profile />} />
+            <Route path="/profile/edit" element={<EditProfile />} />
           </Route>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
