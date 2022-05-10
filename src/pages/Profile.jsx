@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
 import ProfileView from "../components/ProfileView";
 import { db } from "../firebase";
-import { updateProfile } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import useAsync from "../hooks/useAsync";
 import { doc, onSnapshot } from "firebase/firestore";
