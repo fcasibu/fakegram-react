@@ -4,6 +4,7 @@ import { updateProfile } from "firebase/auth";
 import styles from "../styles/ProfileView.module.css";
 import Header from "./Header";
 import useAuth from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const ProfileView = React.memo(function ProfileView({ user }) {
   const { currentUser, followUser, unfollowUser } = useAuth();
@@ -38,7 +39,12 @@ const ProfileView = React.memo(function ProfileView({ user }) {
           <div className={styles["profile-info"]}>
             <div className={styles["profile-info-top"]}>
               <h2>{user.displayName}</h2>
-              <button>Edit Profile</button>
+              <Link
+                to="/profile/edit"
+                style={!isCurrentUser ? { display: "none" } : {}}
+              >
+                Edit Profile
+              </Link>
               {isCurrentUser ? null : !isFollowing ? (
                 <button onClick={followHandler}>Follow</button>
               ) : (
@@ -65,7 +71,7 @@ const ProfileView = React.memo(function ProfileView({ user }) {
         </div>
         <div className={styles.tabs}>
           <h3>Posts</h3>
-          <h3>Saved</h3>
+          <h3 style={!isCurrentUser ? { display: "none" } : {}}>Saved</h3>
         </div>
         <div className={styles.posts}>{renderPosts()}</div>
       </div>
