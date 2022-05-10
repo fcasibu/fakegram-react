@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from 'react';
+import { useReducer, useCallback } from "react";
 
 function asyncReducer(state, action) {
   switch (action.type) {
@@ -22,20 +22,28 @@ function useAsync(initialState = {}) {
     status: "pending",
     data: null,
     error: null,
-    ...initialState,
+    ...initialState
   });
 
-  const runAsync = useCallback(promise => {
-    dispatch({type: "pending"})
-    promise.then((data) => {
-      dispatch({type: "resolved", data})
-    }).catch(error => {
-      dispatch({type: "rejected", error})
-    })
-  }, [dispatch])
+  const runAsync = useCallback(
+    promise => {
+      dispatch({ type: "pending" });
+      promise
+        .then(data => {
+          dispatch({ type: "resolved", data });
+        })
+        .catch(error => {
+          dispatch({ type: "rejected", error });
+        });
+    },
+    [dispatch]
+  );
 
+  const setData = useCallback(data => {
+    dispatch({ type: "resolved", data });
+  });
 
-  return { ...state, runAsync };
+  return { ...state, runAsync, setData };
 }
 
 export default useAsync;

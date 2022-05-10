@@ -11,9 +11,9 @@ function useForm(initialState = {}) {
   }
 
   function changeFormValues({ id, value }) {
-    setFormValues((prevState) => ({
+    setFormValues(prevState => ({
       ...prevState,
-      [id]: value,
+      [id]: value
     }));
   }
 
@@ -22,7 +22,7 @@ function useForm(initialState = {}) {
     buttonRef,
     changeVisibility,
     visibility,
-    changeFormValues,
+    changeFormValues
   };
 }
 

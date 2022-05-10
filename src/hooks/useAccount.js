@@ -23,10 +23,10 @@ function useAccount(initialState = {}) {
     data: {
       email: null,
       displayName: null,
-      password: null,
+      password: null
     },
     error: null,
-    ...initialState,
+    ...initialState
   });
 
   function setState({ type, data = null, error = null }) {
