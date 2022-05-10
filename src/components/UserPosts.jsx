@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   FiHeart,
@@ -139,7 +139,7 @@ function UserPosts({ users }) {
     const following = users.filter(user => {
       return filterUsers()[0].following.includes(user.uid);
     });
-    following.push(filterUsers()[0]);
+    following.unshift(filterUsers()[0]);
 
     return following.map(user => {
       return user.posts.map((post, index) => {

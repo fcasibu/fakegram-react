@@ -13,11 +13,7 @@ import {
 } from "firebase/firestore";
 
 function queryData() {
-  return query(
-    collection(db, "users"),
-    orderBy("createdAt", "desc"),
-    limitToLast(30)
-  );
+  return query(collection(db, "users"), orderBy("createdAt"), limitToLast(30));
 }
 
 function getSnapshot(setData) {
