@@ -46,8 +46,11 @@
   font-weight: 500;
 }
 
+.profile-info-top a,
 .profile-info-top button {
   background: none;
+  color: var(--text-dark);
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 0.2rem;
   padding: 0.3rem 0.8rem;

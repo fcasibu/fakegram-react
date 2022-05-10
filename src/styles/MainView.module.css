@@ -37,8 +37,8 @@
 }
 
 .user img {
-  max-width: 35px;
-  max-height: 35px;
+  width: 30px;
+  height: 30px;
 }
 
 .user button,
@@ -91,8 +91,8 @@
 }
 
 .followings img {
-  max-width: 50px;
-  max-height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   box-shadow: 0 0 0 3px var(--background-color), 0 0 0 5px var(--danger);
 }
@@ -116,6 +116,19 @@
 .post-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.post-top > div {
+  padding-right: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.post-top > a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--text-dark);
   padding: 0.5rem;
 }
@@ -126,8 +139,8 @@
 }
 
 .post-top img {
-  max-width: 35px;
-  max-height: 35px;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
 }
 
@@ -148,6 +161,10 @@
 
 .post-icons > div * + * {
   margin-left: 0.5rem;
+}
+
+.post-icons > div *:hover {
+  opacity: 0.5;
 }
 
 .liked > * {
@@ -184,11 +201,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.7rem;
 }
 
 .user-comment a {
   color: var(--text-dark);
-  font-size: 0.7rem;
 }
 
 .user-comment p {
