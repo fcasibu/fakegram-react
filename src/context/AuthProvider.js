@@ -2,19 +2,16 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AuthContext from "./AuthContext";
 import { auth, db, storage, firebase } from "../firebase";
-import ModalContext from "./ModalContext";
+import { updateProfile } from "firebase/auth";
 
 function getUserFromDB(id) {
   return db.collection("users").doc(id);
 }
 
 function setFollowState(getID, setID, field, state = "arrayUnion") {
-  getUserFromDB(getID).update(
-    {
-      [field]: firebase.firestore.FieldValue[state](setID)
-    },
-    { merge: true }
-  );
+  getUserFromDB(getID).update({
+    [field]: firebase.firestore.FieldValue[state](setID)
+  });
 }
 
 function usersCollection(id) {
@@ -34,25 +31,32 @@ function postImage(uid, img, caption = "") {
   imageRef(uid, img)
     .getDownloadURL()
     .then(url => {
-      usersCollection(uid).set(
-        {
-          posts: firebase.firestore.FieldValue.arrayUnion({
-            caption,
-            image: url,
-            comments: [],
-            likes: [],
-            id: img.name,
-            createdAt: firebase.firestore.Timestamp.now()
-          })
-        },
-        { merge: true }
-      );
+      usersCollection(uid).update({
+        posts: firebase.firestore.FieldValue.arrayUnion({
+          caption,
+          image: url,
+          comments: [],
+          likes: [],
+          id: img.name,
+          createdAt: firebase.firestore.Timestamp.now()
+        })
+      });
+    });
+}
+
+function updatePhoto(currentUser, img) {
+  imageRef(currentUser.uid, img)
+    .getDownloadURL()
+    .then(url => {
+      getUserFromDB(currentUser.uid).update({
+        photoURL: url
+      });
+      updateProfile(currentUser, { photoURL: url });
     });
 }
 
 function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [isModalOpen, setIsModalOpen] = useState();
 
   function signUp({ email, password }) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -68,12 +72,9 @@ function AuthProvider({ children }) {
     postImage(currentUser.uid, img, caption);
   }
 
-  function openModal() {
-    setIsModalOpen(true);
-  }
-
-  function closeModal() {
-    setIsModalOpen(false);
+  async function changePhoto(img) {
+    await imageRef(currentUser.uid, img).put(img);
+    updatePhoto(currentUser, img);
   }
 
   function followUser(user, currentUser) {
@@ -98,22 +99,12 @@ function AuthProvider({ children }) {
     signUp,
     signIn,
     addPost,
+    changePhoto,
     followUser,
     unfollowUser
   };
 
-  const modalValue = {
-    isModalOpen,
-    openModal,
-    closeModal
-  };
-  return (
-    <AuthContext.Provider value={value}>
-      <ModalContext.Provider value={modalValue}>
-        {children}
-      </ModalContext.Provider>
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;
