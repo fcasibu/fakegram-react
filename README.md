@@ -31,7 +31,7 @@ Instagram clone made with React and Firebase.
 - Be able to chat with other users
 - Be able to save posts
 - Notifications
-- UI/UX improvements (maybe use tailwind or other frameworks fpr ui)
+- UI/UX improvements (maybe use tailwind or other frameworks for ui)
 - Add custom fields to users (fullname, bio, etc)
 
 ## Lessons Learned
