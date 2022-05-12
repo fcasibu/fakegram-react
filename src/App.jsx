@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Outlet,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 import AuthProvider from "./context/AuthProvider";
 import useAuth from "./hooks/useAuth";
