@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { FiHeart, FiMessageCircle } from "react-icons/fi";
 import styles from "../styles/ProfileView.module.css";
 import Header from "./Header";
-import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
+import useDatabase from "../hooks/useDatabase";
 
 const ProfileView = React.memo(function ProfileView({ user, openModal }) {
-  const { currentUser, followUser, unfollowUser } = useAuth();
+  const { followUser, unfollowUser, currentUser } = useDatabase();
   const isCurrentUser = user.uid === currentUser.uid;
   const isFollowing = user.followers.includes(currentUser.uid);
 

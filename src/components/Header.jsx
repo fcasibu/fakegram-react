@@ -7,10 +7,12 @@ import Modal from "./Modal";
 import useModal from "../hooks/useModal";
 import UploadModal from "./UploadModal";
 import SearchMenu from "./SearchMenu";
+import ProfileMenu from "./ProfileMenu";
 
 function Header() {
-  const { currentUser } = useAuth();
+  const { currentUser, signOut } = useAuth();
   const { uid, photoURL, displayName } = currentUser;
+  const [isClicked, setIsClicked] = useState(false);
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -82,9 +84,18 @@ function Header() {
             <FiHeart />
           </li>
           <li>
-            <Link to={`/${uid}`}>
-              <img src={photoURL} alt={displayName} />
-            </Link>
+            <img
+              onClick={() => setIsClicked(true)}
+              src={photoURL}
+              alt={displayName}
+            />
+            {isClicked && (
+              <ProfileMenu
+                uid={uid}
+                signOut={signOut}
+                setIsClicked={setIsClicked}
+              />
+            )}
           </li>
         </ul>
       </nav>

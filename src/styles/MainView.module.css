@@ -45,7 +45,7 @@
 }
 
 .user button,
-.all-users button,
+.all-users a,
 .comment button {
   position: absolute;
   right: 0;
@@ -68,8 +68,8 @@
   align-items: center;
 }
 
-.all-users button {
-  color: var(--text-dark);
+.all-users a {
+  color: var(--primary-color);
 }
 
 .followings {
@@ -78,9 +78,15 @@
   gap: 1.5rem;
   background: var(--foreground-color);
   border-radius: 0.2rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.1);
   padding: 1rem;
   overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.followings::-webkit-scrollbar {
+  display: none;
 }
 
 .followings > a {
@@ -112,8 +118,12 @@
 
 .post {
   background: var(--foreground-color);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
   border-radius: 0.3rem;
+}
+
+.post > img {
+  max-width: 550px;
 }
 
 .post-top {
@@ -230,6 +240,10 @@
     margin: 0 auto;
   }
 
+  .post > img {
+    max-width: 450px;
+  }
+
   .user-comment p {
     max-width: 40ch;
     text-overflow: ellipsis;
@@ -240,5 +254,9 @@
 @media (max-width: 475px) {
   .user-comment p {
     max-width: 20ch;
+  }
+
+  .post > img {
+    max-width: 300px;
   }
 }

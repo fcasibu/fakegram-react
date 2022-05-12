@@ -4,18 +4,20 @@ import PropTypes from "prop-types";
 import useAuth from "../hooks/useAuth";
 import styles from "../styles/MainView.module.css";
 
+function filterUsers(users, currentUser) {
+  return users.filter(user => user.uid === currentUser.uid)[0];
+}
+
+function filterFollowings(users, currentUser) {
+  return users.filter(user => {
+    return filterUsers(users, currentUser).following.includes(user.uid);
+  });
+}
 function Followings({ users }) {
   const { currentUser } = useAuth();
-  function filterUsers() {
-    return users.filter(user => user.uid === currentUser.uid);
-  }
 
   function renderUsers() {
-    // refactor
-    const following = users.filter(user => {
-      return filterUsers()[0].following.includes(user.uid);
-    });
-    return following.map(user => {
+    return filterFollowings(users, currentUser).map(user => {
       return (
         <Link to={`/${user.uid}`} key={user.uid}>
           <img src={user.photoURL} />

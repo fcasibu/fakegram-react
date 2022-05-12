@@ -285,6 +285,10 @@
     flex: 1 1;
   }
 
+  .post-header {
+    display: none;
+  }
+
   .post-modal-image img {
     height: 100%;
   }

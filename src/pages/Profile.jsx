@@ -18,6 +18,7 @@ function Profile() {
   const { userID } = useParams();
   const { closeModal, isModalOpen, openModal } = useModal();
   const { status, data, runAsync } = useAsync();
+
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "users", userID), doc => {
       runAsync(getData(doc.data().uid));

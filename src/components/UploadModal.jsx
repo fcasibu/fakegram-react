@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import useAuth from "../hooks/useAuth";
 import styles from "../styles/Modal.module.css";
+import useDatabase from "../hooks/useDatabase";
 
 function UploadModal({ closeModal }) {
-  const { addPost } = useAuth();
+  const { addPost } = useDatabase();
   const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState();

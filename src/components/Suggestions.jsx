@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useAuth from "../hooks/useAuth";
 import styles from "../styles/MainView.module.css";
 import { Link } from "react-router-dom";
+import useDatabase from "../hooks/useDatabase";
 
 function Suggestions({ users }) {
-  const { currentUser, followUser } = useAuth();
+  const { followUser, currentUser } = useDatabase();
 
   function filterUsers() {
     return users.filter(
@@ -15,7 +15,7 @@ function Suggestions({ users }) {
     );
   }
 
-  function followHandler({ target: { id } }) {
+  function followHandler(id) {
     followUser(id, currentUser.uid);
   }
 
@@ -27,9 +27,7 @@ function Suggestions({ users }) {
             <img src={user.photoURL} />
             <h3>{user.displayName}</h3>
           </Link>
-          <button id={user.uid} onClick={followHandler}>
-            Follow
-          </button>
+          <button onClick={() => followHandler(user.uid)}>Follow</button>
         </div>
       );
     });
@@ -43,7 +41,7 @@ function Suggestions({ users }) {
       </Link>
       <div className={styles["all-users"]}>
         <h3>Suggestions for you</h3>
-        <button>See All</button>
+        <Link to="/see-all">See all</Link>
       </div>
       <div className={styles.users}>{renderUsers()}</div>
     </>

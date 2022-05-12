@@ -9,6 +9,7 @@ function SearchMenu({ users }) {
         {users.map((user, index) => {
           return (
             <Link to={`/${user.uid}`} key={index}>
+              <img src={user.photoURL} />
               <p>{user.displayName}</p>
             </Link>
           );

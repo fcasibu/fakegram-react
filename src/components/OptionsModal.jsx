@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "../styles/Modal.module.css";
+import { Link } from "react-router-dom";
 
 function OptionsModal({ data }) {
   function unfollowHandler() {
@@ -24,7 +25,9 @@ function OptionsModal({ data }) {
           Delete
         </p>
       )}
-      <p>Go to post</p>
+      <Link to={`/${data.posterId}/${data.postIndex}`}>
+        <p>Go to post</p>
+      </Link>
       <p onClick={() => data.closeModal()}>Cancel</p>
     </div>
   );

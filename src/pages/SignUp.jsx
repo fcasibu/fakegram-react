@@ -24,8 +24,8 @@ function SignUp() {
   const {
     formValues,
     buttonRef,
-    changeVisibility,
     visibility,
+    changeVisibility,
     changeFormValues
   } = useForm(initialState);
   const { email, password, displayName } = formValues;

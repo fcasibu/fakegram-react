@@ -8,78 +8,35 @@ import {
 } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import styles from "../styles/MainView.module.css";
-import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import { formatDistance } from "date-fns";
 import Modal from "./Modal";
 import OptionsModal from "./OptionsModal";
 import useModal from "../hooks/useModal";
+import useDatabase from "../hooks/useDatabase";
 
-// Duplicated code just for testing will refactor soon
-function getUserFromDB(id) {
-  return db.collection("users").doc(id);
-}
-
-function setUserFromDB(user, action) {
-  getUserFromDB(user.posterId).update({
-    [user.mainField]: action
-  });
-}
-
-function filterData(user, action) {
-  return (action[user.index][user.subField] = action[user.index][
-    user.subField
-  ].filter(id => id !== user.uid));
-}
-
-function removeData(user, action) {
-  return action[user.method](user.index, 1);
-}
-
-function addData(user, action) {
-  return action[user.index][user.subField][user.method](user.data);
-}
-
-function method(user, action) {
-  switch (user.method) {
-    case "filter":
-      return filterData(user, action);
-    case "push":
-      return addData(user, action);
-    case "splice":
-      return removeData(user, action);
-    default:
-      throw new Error(`Unknown method: ${user.method}`);
-  }
-}
-
-async function interact(user) {
-  const userData = await getUserFromDB(user.posterId).get();
-  const action = userData.data()[user.mainField];
-  method(user, action);
-  setUserFromDB(user, action);
-}
 function UserPosts({ users }) {
-  const { currentUser, unfollowUser } = useAuth();
+  const { currentUser } = useAuth();
+  const { unfollowUser, interact } = useDatabase();
   const [formValue, setFormValue] = useState("");
   const [data, setData] = useState({});
   const { openModal, closeModal, isModalOpen } = useModal();
 
-  function likePost(event) {
-    const likes = JSON.parse(event.target.dataset.likes);
+  function likePost(likesList, index, id) {
+    const likes = JSON.parse(likesList);
     if (likes.includes(currentUser.uid)) {
       interact({
         uid: currentUser.uid,
-        posterId: event.target.id,
-        index: +event.target.dataset.index,
+        posterId: id,
+        index: index,
         mainField: "posts",
         subField: "likes",
         method: "filter"
       });
     } else {
       interact({
-        posterId: event.target.id,
-        index: +event.target.dataset.index,
+        posterId: id,
+        index: index,
         data: currentUser.uid,
         mainField: "posts",
         subField: "likes",
@@ -160,10 +117,9 @@ function UserPosts({ users }) {
               <div className={styles["post-icons"]}>
                 <div>
                   <div
-                    data-likes={JSON.stringify(post.likes)}
-                    data-index={index}
-                    id={user.uid}
-                    onClick={likePost}
+                    onClick={() =>
+                      likePost(JSON.stringify(post.likes), index, user.uid)
+                    }
                     className={
                       post.likes.includes(currentUser.uid) ? styles.liked : ""
                     }

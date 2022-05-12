@@ -33,8 +33,8 @@ function SignIn() {
   const {
     formValues,
     buttonRef,
-    changeVisibility,
     visibility,
+    changeVisibility,
     changeFormValues
   } = useForm(initialState);
   const { email, password } = formValues;
@@ -55,7 +55,6 @@ function SignIn() {
       } catch (error) {
         const message = checkErrorType(error.code);
         setState({ type: "rejected", error: message });
-        buttonRef.current.disabled = false;
       }
     }
   }
@@ -77,6 +76,11 @@ function SignIn() {
 
   function handleChange(event) {
     changeFormValues(event.target);
+  }
+
+  function useTestAccount() {
+    const data = { email: "test@test.com", password: "123456" };
+    setState({ type: "resolved", data });
   }
 
   return (
@@ -114,6 +118,9 @@ function SignIn() {
           </div>
           <button ref={buttonRef} type="submit">
             {status === "resolved" ? "Loading..." : "Sign in"}
+          </button>
+          <button onClick={useTestAccount} type="button">
+            Use a test account
           </button>
         </form>
         <div className={styles.error} role="alert">

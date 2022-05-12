@@ -9,58 +9,15 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import styles from "../styles/Modal.module.css";
 import useAuth from "../hooks/useAuth";
-import { db } from "../firebase";
 import { formatDistance } from "date-fns";
 import useModal from "../hooks/useModal";
 import Modal from "./Modal";
 import OptionsModal from "./OptionsModal";
-
-function getUserFromDB(id) {
-  return db.collection("users").doc(id);
-}
-
-function setUserFromDB(user, action) {
-  getUserFromDB(user.posterId).update({
-    [user.mainField]: action
-  });
-}
-
-function filterData(user, action) {
-  return (action[user.index][user.subField] = action[user.index][
-    user.subField
-  ].filter(id => id !== user.uid));
-}
-
-function removeData(user, action) {
-  return action[user.method](user.index, 1);
-}
-
-function addData(user, action) {
-  return action[user.index][user.subField][user.method](user.data);
-}
-
-function method(user, action) {
-  switch (user.method) {
-    case "filter":
-      return filterData(user, action);
-    case "push":
-      return addData(user, action);
-    case "splice":
-      return removeData(user, action);
-    default:
-      throw new Error(`Unknown method: ${user.method}`);
-  }
-}
-
-async function interact(user) {
-  const userData = await getUserFromDB(user.posterId).get();
-  const action = userData.data()[user.mainField];
-  method(user, action);
-  setUserFromDB(user, action);
-}
+import useDatabase from "../hooks/useDatabase";
 
 function PostModal({ user, closeModal }) {
-  const { currentUser, unfollowUser } = useAuth();
+  const { currentUser } = useAuth();
+  const { unfollowUser, interact } = useDatabase();
   const { postId } = useParams();
   const [data, setData] = useState({});
   const { isModalOpen, closeModal: close, openModal } = useModal();

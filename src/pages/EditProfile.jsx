@@ -1,23 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateProfile } from "firebase/auth";
-import { db } from "../firebase";
 import Header from "../components/Header";
-import useAuth from "../hooks/useAuth";
 import useForm from "../hooks/useForm";
 import styles from "../styles/EditProfile.module.css";
-
-function getUserFromDB(id) {
-  return db.collection("users").doc(id);
-}
-
-function updateUserInfo(user, formValues) {
-  updateProfile(user, { ...formValues });
-  getUserFromDB(user.uid).update({ ...formValues });
-}
+import useDatabase from "../hooks/useDatabase";
 
 function EditProfile() {
-  const { currentUser, changePhoto } = useAuth();
+  const { currentUser, changePhoto, updateUserInfo } = useDatabase();
   const { formValues, changeFormValues, buttonRef } = useForm(() => {
     return { displayName: currentUser.displayName, email: currentUser.email };
   });
