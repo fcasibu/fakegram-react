@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/fakegram-react/static/css/main.af246cf5.css",
-    "main.js": "/fakegram-react/static/js/main.3a9819b1.js",
+    "main.js": "/fakegram-react/static/js/main.6487472c.js",
     "static/media/loading.svg": "/fakegram-react/static/media/loading.35db9a85e860cc08abe59de2c5c06904.svg",
     "index.html": "/fakegram-react/index.html",
     "main.af246cf5.css.map": "/fakegram-react/static/css/main.af246cf5.css.map",
-    "main.3a9819b1.js.map": "/fakegram-react/static/js/main.3a9819b1.js.map"
+    "main.6487472c.js.map": "/fakegram-react/static/js/main.6487472c.js.map"
   },
   "entrypoints": [
     "static/css/main.af246cf5.css",
-    "static/js/main.3a9819b1.js"
+    "static/js/main.6487472c.js"
   ]
 }
