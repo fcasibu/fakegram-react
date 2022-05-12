@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import FallbackLoading from "../components/FallbackLoading";
 import Header from "../components/Header";
 import MainView from "../components/MainView";
