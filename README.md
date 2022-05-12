@@ -43,3 +43,5 @@ Another thing that I've learned, not so much from this project but from The Odin
 ## Acknowledgements
 
 - [The Odin Project](https://www.theodinproject.com/)
+- [Instagram](https://www.instagram.com/)
+- [Maninder Kaur - Instagram Icon](https://iconscout.com/contributors/maninderkaur)
