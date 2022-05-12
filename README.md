@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# fakegram-react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Instagram clone made with React and Firebase.
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+[Live Preview](https://nevz9.github.io/fakegram-react)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Account Creation**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Signup/Signin with an email and password
+- A test account is provided
 
-### `npm test`
+**User**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- User is able to change their profile picture and display name
+- User is able to upload an image with a caption
+- User is able to follow/unfollow another user
+- User is able to delete their own posts
+- User is able to search other users through the search bar
 
-### `npm run build`
+**User Post**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- User is able to comment
+- User is able to like/unlike a post
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Future Additions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Be able to chat with other users
+- Be able to save posts
+- Notifications
+- UI/UX improvements (maybe use tailwind or other frameworks fpr ui)
+- Add custom fields to users (fullname, bio, etc)
 
-### `npm run eject`
+## Lessons Learned
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This is by far the biggest project I've done yet. Using BaaS has taught me the communication between frontend and backend. This is great start for what's coming up next with Node.js. I haven't done any testing on this particular project, but throughout the days, I've always contemplated about it. There's something about it that lets you see from the user's perspective, you test what the user see and what the user interacts with. This is something I should not ignore and will definitely test my projects from now on.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Another thing that I've learned, not so much from this project but from The Odin Project community. It is to stop being stubborn and selfish. Plan out your projects and test your application. Be sure to always take breaks and have fun!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Acknowledgements
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [The Odin Project](https://www.theodinproject.com/)
