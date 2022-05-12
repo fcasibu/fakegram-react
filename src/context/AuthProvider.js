@@ -33,6 +33,7 @@ function postImage(uid, img, caption = "") {
     .then(url => {
       usersCollection(uid).update({
         posts: firebase.firestore.FieldValue.arrayUnion({
+          poster: uid,
           caption,
           image: url,
           comments: [],
