@@ -226,8 +226,31 @@
 }
 
 @media (max-width: 720px) {
+  .main {
+    flex-direction: column;
+  }
   .right-section {
-    display: none;
+    position: relative;
+    top: 0;
+    order: 1;
+    padding: 1rem;
+  }
+
+  .users {
+    flex-direction: row;
+    overflow-x: scroll;
+  }
+
+  .user {
+    flex-direction: column;
+  }
+
+  .user button {
+    position: relative;
+  }
+
+  .left-section {
+    order: 2;
   }
 
   .followings {
