@@ -81,6 +81,47 @@
   height: 250px;
 }
 
-.posts img:hover {
+.post {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post:hover .post-info {
+  display: flex;
+}
+
+.post:hover img {
   opacity: 0.8;
+}
+
+.post-info {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.post-info > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+}
+
+@media (max-width: 850px) {
+  .profile-view {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .posts img {
+    width: 100%;
+    height: 100%;
+  }
 }

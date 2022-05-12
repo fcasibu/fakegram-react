@@ -13,7 +13,8 @@
 }
 
 .upload-modal,
-.options-modal {
+.options-modal,
+.post-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -81,13 +82,222 @@
 
 .options-modal {
   padding: 1rem 0;
+  border: 1px solid var(--text-dark);
+}
+
+.options-modal a {
+  color: black;
 }
 
 .options-modal p {
   cursor: pointer;
 }
 
-.options-modal p:not(:last-child) {
+.options-modal :not(:last-child) {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 0.5rem;
+}
+
+.post-modal {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 90%;
+  padding: 0;
+}
+
+.post-modal-image {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: black;
+  width: 100%;
+  height: 100%;
+}
+
+.post-modal-image img {
+  height: 55%;
+  width: 100%;
+}
+
+.post-modal-details {
+  position: relative;
+  flex: 1;
+  padding: 1rem 0.5rem;
+}
+
+.post-modal-details img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-header > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.post-body {
+  height: max-content;
+}
+
+.post-header h3,
+.post-body h3 {
+  font-size: 0.8rem;
+}
+
+.poster {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.poster > div {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.post-body p {
+  font-size: 0.8rem;
+}
+
+.post-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 200px;
+}
+
+.post-comments a {
+  color: var(--text-dark);
+}
+
+.post-comments > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-icons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+.post-icons > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.post-icons * {
+  cursor: pointer;
+}
+
+.liked {
+  display: flex;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}
+
+.liked-post > * {
+  fill: red;
+  stroke: red;
+}
+
+.date {
+  display: flex;
+  align-self: flex-start;
+  color: #7c7c7c;
+}
+
+.add-comment button {
+  position: absolute;
+  right: 0;
+  background: none;
+  color: var(--primary-color);
+  font-weight: 500;
+  border: 0;
+  cursor: pointer;
+}
+
+.add-comment {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 10px;
+  left: -10px;
+}
+
+.add-comment form {
+  width: 90%;
+}
+
+.add-comment input {
+  width: 92%;
+  border: 0;
+  outline: 0;
+}
+
+.add-comment button {
+  top: 8px;
+}
+
+@media (max-width: 850px) {
+  .post-modal-image {
+    max-width: 300px;
+    flex: 1 0 auto;
+  }
+
+  .post-comments p {
+    max-width: 20ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 740px) {
+  .post-modal-image {
+    max-width: 100%;
+    flex: 1 1;
+  }
+
+  .post-comments p {
+    max-width: 15ch;
+  }
+}
+
+@media (max-width: 500px) {
+  .post-modal {
+    flex-direction: column;
+  }
+
+  .post-modal-image {
+    width: 100%;
+    flex: 1 1;
+  }
+
+  .post-modal-image img {
+    height: 100%;
+  }
+
+  .post-body {
+    height: max-content;
+  }
+
+  .post-comments {
+    display: none;
+  }
+
+  .add-comment {
+    padding: 0 0.5rem;
+  }
 }

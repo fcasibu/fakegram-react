@@ -74,6 +74,30 @@ body {
   position: relative;
 }
 
+.search-bar .menu {
+  display: block;
+  position: absolute;
+  background: var(--foreground-color);
+  width: 100%;
+  height: max-content;
+  max-height: 150px;
+  border: 1px solid black;
+  padding: 0.2rem;
+  overflow-y: scroll;
+}
+
+.search-bar .menu > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.2rem;
+}
+
+.search-bar .menu a {
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
 .search-bar input {
   background: var(--background-color);
   border: 1px solid #ccc;
@@ -125,4 +149,15 @@ body {
 
 .header li button p {
   pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .search-bar {
+    display: none;
+  }
+
+  .header {
+    justify-content: center;
+    gap: 1rem;
+  }
 }
