@@ -239,6 +239,7 @@
   .users {
     flex-direction: row;
     overflow-x: scroll;
+    padding: 0.5rem;
   }
 
   .user {
