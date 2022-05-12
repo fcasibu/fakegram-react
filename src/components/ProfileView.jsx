@@ -1,22 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { updateProfile } from "firebase/auth";
+import { FiHeart, FiMessageCircle } from "react-icons/fi";
 import styles from "../styles/ProfileView.module.css";
 import Header from "./Header";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
 
-const ProfileView = React.memo(function ProfileView({ user }) {
+const ProfileView = React.memo(function ProfileView({ user, openModal }) {
   const { currentUser, followUser, unfollowUser } = useAuth();
-
   const isCurrentUser = user.uid === currentUser.uid;
   const isFollowing = user.followers.includes(currentUser.uid);
 
   function renderPosts() {
-    return user.posts.map(post => {
+    return user.posts.map((post, index) => {
       return (
-        <div key={post.id}>
-          <img src={post.image} />
+        <div key={post.id} onClick={openModal} className={styles.post}>
+          <div className={styles["post-info"]}>
+            <div>
+              <FiHeart />
+              {post.likes.length}
+            </div>
+            <div>
+              <FiMessageCircle />
+              {post.comments.length}
+            </div>
+          </div>
+          <Link to={`${index}`}>
+            <img src={post.image} />
+          </Link>
         </div>
       );
     });
@@ -89,5 +100,6 @@ ProfileView.propTypes = {
     posts: PropTypes.arrayOf(PropTypes.object),
     followers: PropTypes.arrayOf(PropTypes.string),
     following: PropTypes.arrayOf(PropTypes.string)
-  })
+  }),
+  openModal: PropTypes.func
 };
