@@ -41,7 +41,7 @@ function useAsync(initialState = {}) {
 
   const setData = useCallback(data => {
     dispatch({ type: "resolved", data });
-  });
+  }, [dispatch]);
 
   return { ...state, runAsync, setData };
 }
