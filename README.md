@@ -1,6 +1,8 @@
 # fakegram-react
 
-Instagram clone made with React and Firebase.
+Instagram clone made with React and Firebase.  
+
+This is open to public and anyone can upload any images. If you find anything inappropriate, do <a href="https://github.com/nevz9/fakegram-react/issues">send an issue</a>. Thank you
 
 ## Demo
 
@@ -33,6 +35,7 @@ Instagram clone made with React and Firebase.
 - Notifications
 - UI/UX improvements (maybe use tailwind or other frameworks for ui)
 - Add custom fields to users (fullname, bio, etc)
+- Content moderation
 
 ## Lessons Learned
 
